@@ -31,4 +31,18 @@ public class UserService {
         }
         return null;
     }
+
+    public User save(User user) {
+        if (user.getId() == null) {
+            user.setId(++usersCount);
+        }
+
+        if (user.getJoinDate() == null) {
+            user.setJoinDate(new Date());
+        }
+
+        users.add(user);
+
+        return user;
+    }
 }
