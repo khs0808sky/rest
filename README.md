@@ -151,42 +151,86 @@ public class UserController {
 ### Mapper란?
 
 **Mapper**는 서로 다른 데이터 구조를 **변환(mapping)** 해주는 역할을 하는 개념입니다.
-주로 **데이터베이스(DB)와 객체(Entity)**, 혹은 **Entity와 DTO(Data Transfer Object)** 사이에서 사용됩니다.
+주로 **DB와 객체(Entity)**, **Entity와 DTO(Data Transfer Object)** 사이에서 사용됩니다.
 즉, **데이터를 한 형태에서 다른 형태로 바꿔주는 중간 관리자**라고 이해하면 쉽습니다.
 
 ---
 
-#### 1. DB ↔ Entity
+#### 🔹 Mapper의 기본 개념
 
-* DB 테이블의 한 행(row)을 자바 객체(Entity)로 변환.
-* 자바 객체(Entity)를 DB에 저장할 때, 다시 SQL 쿼리용 데이터로 변환.
-* 예: `user` 테이블의 데이터를 `User` 객체로 매핑.
+1. **DB ↔ Entity 변환**
 
-#### 2. Entity ↔ DTO
+   * DB 테이블의 한 행(row)을 자바 객체(Entity)로 매핑
+   * Entity 객체를 DB에 저장할 때 다시 SQL용 데이터로 변환
+   * 예: `users` 테이블 → `User` 객체
 
-* Entity: DB와 직접 연결된 객체, 비즈니스 로직 중심.
-* DTO: 화면(UI)이나 API에서 주고받는 데이터 객체, 필요한 데이터만 담음.
-* Mapper는 Entity ↔ DTO 변환을 담당하여, **불필요한 데이터 전달을 줄이고 구조를 깔끔하게 유지**.
+2. **Entity ↔ DTO 변환**
+
+   * Entity: DB와 직접 연결된 객체, 비즈니스 로직 중심
+   * DTO: 화면(UI)이나 API에서 주고받는 데이터 객체, 필요한 데이터만 담음
+   * Mapper는 Entity ↔ DTO 변환 담당 → 불필요한 데이터 전달 방지, 구조 깔끔 유지
+
+3. **자동 변환 라이브러리 활용**
+
+   * MapStruct, Dozer 같은 라이브러리로 반복적인 변환 코드 최소화
+   * 예: `UserMapper.toDto(userEntity)`
 
 ---
 
-### 핵심 포인트
+#### 🔹 Spring / Java에서 Mapper 사용 예시
 
-* **Mapper = 변환 담당**, DB 조회나 삽입 같은 직접적인 로직은 담당하지 않음.
-* 구현 방법: **인터페이스**, 혹은 라이브러리(MyBatis, MapStruct, Dozer 등) 활용.
-* 구조가 다른 데이터 간의 **중간 브릿지 역할**을 수행.
+```java
+// Entity
+public class User {
+    private Long id;
+    private String name;
+    // getter, setter
+}
+
+// DTO
+public class UserDto {
+    private Long id;
+    private String name;
+    // getter, setter
+}
+
+// Mapper 인터페이스 (MapStruct 사용 예)
+@Mapper
+public interface UserMapper {
+    UserDto toDto(User user);
+    User toEntity(UserDto userDto);
+}
+```
 
 ---
 
-### 쉽게 비유하면
+#### 🔹 Mapper 활용 포인트
+
+1. **데이터 변환 집중**
+
+   * Mapper는 데이터 구조 변환만 담당
+   * DB 조회/삽입 로직은 Repository나 DAO가 담당
+
+2. **코드 깔끔함 유지**
+
+   * 변환 로직이 한 곳에 모이므로 관리 용이
+   * 복잡한 엔티티 → DTO 변환 시 반복 코드 제거
+
+3. **유지보수 용이**
+
+   * DTO 구조 변경 시 Mapper만 수정하면 됨
+
+---
+
+#### 🔹 쉽게 비유하면
 
 * “DB어” → “Java어”
 * “Entity어” → “DTO어”
-* **데이터 구조가 바뀔 때 중간에서 변환해주는 번역가** 같은 존재입니다.
-* 덕분에 코드가 깔끔해지고, 데이터 전달 과정에서 오류를 줄일 수 있음.
+* 데이터 구조가 바뀔 때 **중간에서 맞춰주는 번역가** 같은 존재
 
 ---
 
 📅[목차로 돌아가기](#-목차)
 
 ---
+
