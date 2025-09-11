@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class HelloWorld {
-    private String message;    
+public class Post {
+    private Integer id;
+    private String description;
+    private Integer user_id;
 }

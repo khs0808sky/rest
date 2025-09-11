@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 public class HelloController {
-    
+
     @GetMapping("/hello")
     public String hello() {
         return "Hello Spring!!!";
@@ -21,7 +21,7 @@ public class HelloController {
     public HelloWorld helloBean() {
         return new HelloWorld("Hello World Bean!!!");
     }
-
+    
     @GetMapping("/hello-bean/path-variable/{name}/{age}")
     public HelloWorld helloBean2(@PathVariable String name,
                                 @PathVariable int age) {
@@ -30,5 +30,4 @@ public class HelloController {
     
     
     
-
 }
