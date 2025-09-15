@@ -5,6 +5,7 @@
 - [2025-09-10](#2025-09-10)
 - [2025-09-11](#2025-09-11)
 - [2025-09-12](#2025-09-12)
+- [2025-09-15](#2025-09-15)
   
 <br><br><br>
 
@@ -346,6 +347,103 @@ def read_user(user_id: int):
 * 데이터 검증이 중요한 프로젝트
 * 비동기 처리가 필요한 실시간 서비스 (채팅, 스트리밍 등)
 * 서버 + 자동 문서화 + 테스트를 한 번에 해결하고 싶을 때
+
+---
+
+📅[목차로 돌아가기](#-목차)
+
+---
+
+### 2025-09-15
+
+---
+
+### GIT이란?
+
+**Git**은 **분산 버전 관리 시스템(Distributed Version Control System)** 입니다.
+즉, 프로젝트의 변경 이력을 기록하고, 협업 시 코드 충돌을 최소화하며, 과거 버전으로 되돌릴 수 있게 해주는 도구입니다.
+개발자라면 필수로 익혀야 하는 협업·버전 관리 툴입니다.
+
+---
+
+#### 🔹 Git의 핵심 개념
+
+1. **로컬 저장소 & 원격 저장소**
+
+   * 로컬 저장소(Local Repository): 내 컴퓨터에 저장된 버전 관리 공간
+   * 원격 저장소(Remote Repository): GitHub, GitLab, Bitbucket 같은 서버에 있는 저장소
+   * `git push` → 로컬에서 원격으로 올림
+     `git pull` → 원격에서 로컬로 가져옴
+
+2. **스냅샷(Snapshot)**
+
+   * Git은 파일을 단순히 변경점(diff)으로만 저장하는 것이 아니라,
+     **그 시점의 전체 스냅샷을 저장** (중복되는 파일은 내부적으로 효율적으로 처리)
+
+3. **브랜치(Branch)**
+
+   * 독립적인 작업 공간
+   * `main` (혹은 `master`) 브랜치에서 새로운 브랜치를 만들어 실험, 기능 추가 가능
+   * 머지(Merge) 시 협업 효율 ↑
+
+---
+
+#### 🔹 Git 기본 명령어
+
+1. **설정**
+
+   ```bash
+   git config --global user.name "Hyunsoo"
+   git config --global user.email "hyunsoo@example.com"
+   ```
+
+2. **저장소 초기화 & 상태 확인**
+
+   ```bash
+   git init        # 새로운 로컬 저장소 생성
+   git status      # 현재 상태 확인
+   ```
+
+3. **스테이징 & 커밋**
+
+   ```bash
+   git add file.py       # 특정 파일 스테이징
+   git add .             # 모든 변경 파일 스테이징
+   git commit -m "메시지"  # 스냅샷(커밋) 생성
+   ```
+
+4. **브랜치 & 머지**
+
+   ```bash
+   git branch feature/login    # 브랜치 생성
+   git checkout feature/login  # 브랜치 이동
+   git merge feature/login     # 브랜치 병합
+   ```
+
+5. **원격 저장소 연결 & 동기화**
+
+   ```bash
+   git remote add origin https://github.com/user/repo.git
+   git push -u origin main
+   git pull
+   ```
+
+---
+
+#### 🔹 Git의 장점
+
+* **안전한 버전 관리** → 이전 상태로 쉽게 되돌릴 수 있음
+* **협업 최적화** → 여러 명이 동시에 작업해도 충돌 최소화
+* **분산형 시스템** → 인터넷이 없어도 로컬에서 작업 가능
+* **오픈소스 & 표준** → GitHub, GitLab, Bitbucket 등 어디서나 사용 가능
+
+---
+
+#### 🔹 Git 활용 시나리오
+
+* 개인 프로젝트 버전 관리 (실험 → 롤백 → 개선)
+* 팀 프로젝트 협업 (브랜치 전략, PR 코드 리뷰)
+* 오픈소스 기여 (Fork → 수정 → Pull Request)
 
 ---
 
