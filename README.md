@@ -8,6 +8,7 @@
 - [2025-09-15](#2025-09-15)
 - [2025-09-16](#2025-09-16)
 - [2025-09-17](#2025-09-17)
+- [2025-09-18](#2025-09-18)
 
 <br><br><br>
 
@@ -633,3 +634,115 @@ docker build -t myapp:1.0 .
 📅[목차로 돌아가기](#-목차)
 
 ---
+
+### 2025-09-19
+
+---
+
+### 쿠버네티스(Kubernetes)란?
+
+\*\*쿠버네티스(Kubernetes, 줄여서 K8s)\*\*는 **컨테이너 오케스트레이션(Container Orchestration)** 플랫폼입니다.
+즉, Docker 같은 컨테이너를 **대규모로 배포·관리·확장**하기 위해 만들어진 시스템입니다.
+구글이 내부에서 사용하던 Borg 시스템을 오픈소스로 공개한 것이 시작점입니다.
+
+---
+
+#### 🔹 쿠버네티스의 핵심 개념
+
+1. **클러스터(Cluster)**
+
+   * 여러 개의 서버(Node)를 묶어 하나의 거대한 컴퓨터처럼 동작
+   * **마스터(Node)** → 전체 스케줄링·관리
+   * **워커(Node)** → 실제 컨테이너 실행
+
+2. **Pod**
+
+   * 쿠버네티스에서 배포되는 가장 작은 단위
+   * 1개 이상의 컨테이너로 구성 (보통 1 Pod = 1 컨테이너)
+
+3. **Deployment**
+
+   * Pod를 몇 개 띄울지, 어떻게 업데이트할지 정의
+   * 롤링 업데이트, 롤백 등을 지원
+
+4. **Service**
+
+   * Pod들이 외부와 통신할 수 있도록 네트워크 추상화
+   * 로드밸런싱 제공 → 트래픽 균등 분배
+
+5. **ConfigMap & Secret**
+
+   * 환경 변수, 설정 파일, 비밀번호 등을 안전하게 주입
+
+---
+
+#### 🔹 쿠버네티스의 장점
+
+* **자동화된 배포 & 롤백** → 새로운 버전 배포 시 점진적 업데이트
+* **자동 복구(Self-Healing)** → 죽은 Pod를 자동 재시작
+* **수평 확장(Scaling)** → 트래픽 증가 시 Pod 개수를 자동으로 늘림
+* **서비스 디스커버리 & 로드밸런싱** → Pod 위치와 상관없이 접근 가능
+* **클라우드/온프레미스 어디서나 동작** → AWS, GCP, Azure, 로컬 클러스터(Minikube) 등
+
+---
+
+#### 🔹 간단한 예시 (Deployment & Service)
+
+```yaml
+# deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp
+  template:
+    metadata:
+      labels:
+        app: myapp
+    spec:
+      containers:
+      - name: myapp-container
+        image: myapp:1.0
+        ports:
+        - containerPort: 80
+```
+
+```yaml
+# service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+spec:
+  selector:
+    app: myapp
+  ports:
+    - port: 80
+      targetPort: 80
+  type: LoadBalancer
+```
+
+* **Deployment** → `myapp` 컨테이너를 3개 실행
+* **Service** → 로드밸런서로 트래픽을 세 Pod에 분배
+
+---
+
+#### 🔹 Docker vs Kubernetes 관계
+
+* Docker → 컨테이너 **한 개**를 만들고 실행
+* Kubernetes → **수십\~수천 개의 컨테이너**를 관리, 확장, 네트워킹, 모니터링
+
+즉, Docker로 만든 앱을 실제 서비스 환경에서 안정적으로 운영하려면
+Kubernetes 같은 오케스트레이션 툴이 필요합니다.
+
+---
+
+📅[목차로 돌아가기](#-목차)
+
+---
+
+
