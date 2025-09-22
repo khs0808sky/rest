@@ -10,6 +10,7 @@
 - [2025-09-17](#2025-09-17)
 - [2025-09-18](#2025-09-18)
 - [2025-09-19](#2025-09-19)
+- [2025-09-22](#2025-09-22)
 
 <br><br><br>
 
@@ -832,6 +833,107 @@ IT 인프라를 필요할 때마다 빌려 쓸 수 있는 **IaaS / PaaS / SaaS �
 * **대규모 서비스**
 
   * EKS로 Kubernetes 클러스터 운영 → 오토스케일링으로 트래픽 처리
+
+---
+
+📅[목차로 돌아가기](#-목차)
+
+---
+
+### 2025-09-22
+
+---
+
+### GitHub Actions란?
+
+**GitHub Actions**는 **CI/CD(Continuous Integration / Continuous Deployment)** 플랫폼입니다.
+GitHub 저장소 안에서 직접 **워크플로우(Workflow)** 를 정의하고, 코드 빌드·테스트·배포까지 자동화할 수 있습니다.
+즉, **코드 푸시 → 자동 빌드/테스트 → 배포** 과정을 GitHub에서 바로 처리할 수 있게 해주는 도구입니다.
+
+---
+
+#### 🔹 GitHub Actions의 핵심 개념
+
+1. **Workflow**
+
+   * 전체 자동화 시나리오 (YAML 파일로 정의)
+   * `.github/workflows/` 폴더에 작성
+   * 예: `ci.yml`, `deploy.yml`
+
+2. **Event**
+
+   * Workflow를 실행시키는 트리거
+   * 예: `push`, `pull_request`, `schedule`, `workflow_dispatch`
+
+3. **Job**
+
+   * 워크플로우 안에서 실행되는 **작업 단위**
+   * 여러 Job을 병렬/순차 실행 가능
+
+4. **Step**
+
+   * Job 안에서 실행되는 실제 명령
+   * `run`으로 커맨드 실행하거나, **Action**을 호출할 수 있음
+
+5. **Action**
+
+   * 재사용 가능한 스크립트 (커뮤니티에서 만든 것 사용 가능)
+   * 예: `actions/checkout`, `actions/setup-python`
+
+---
+
+#### 🔹 간단한 예시 (CI 워크플로우)
+
+```yaml
+name: CI Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Run tests
+      run: pytest
+```
+
+* **on**: main 브랜치에 push 또는 PR 발생 시 실행
+* **runs-on**: Ubuntu 환경에서 실행
+* **steps**: checkout → Python 설치 → 의존성 설치 → 테스트 실행
+
+---
+
+#### 🔹 GitHub Actions 장점
+
+* **GitHub와 완벽 통합** → 별도 CI 서버 없이 바로 사용
+* **멀티 OS 지원** → Ubuntu, Windows, macOS에서 테스트 가능
+* **YAML 기반 구성** → 직관적이고 재사용 쉬움
+* **Marketplace 제공** → 수많은 공개 Action 재사용 가능
+
+---
+
+#### 🔹 실전 활용 시나리오
+
+* 코드 푸시 시 자동 빌드 & 테스트 → PR 품질 보장
+* Docker 이미지 빌드 후 ECR, GCP, Azure에 자동 배포
+* 정적 웹사이트 → GitHub Pages 자동 배포
+* 매일 정해진 시간에 데이터 파이프라인 실행 (`schedule` 이벤트)
 
 ---
 
